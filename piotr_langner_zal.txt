@@ -1,0 +1,37 @@
+/* 2 */
+select c.contactFirstName, contactLastName, count(o.customerNumber) as ile
+from customers as c
+inner join orders as o on o.customerNumber = c.customerNumber
+group by o.customerNumber
+order by ile desc;
+
+/* 4a */
+select year(o.orderDate), p.productName, sum(od.quantityOrdered) as suma
+from orders as o
+inner join orderdetails as od on od.orderNumber = o.orderNumber
+inner join products as p on p.productCode = od.productCode
+where p.productName = "1952 Alpine Renault 1300"
+or p.productName = "1968 Ford Mustang"
+or p.productName = "1996 Moto Guzzi 1100i"
+group by year(o.orderDate), p.productName;
+
+/* 4b */
+
+select year(o.orderDate) as rok, month(o.orderDate) as miesiac, p.productName, sum(od.quantityOrdered) as suma
+from orders as o
+inner join orderdetails as od on od.orderNumber = o.orderNumber
+inner join products as p on p.productCode = od.productCode
+where p.productName like "%Harley%"
+group by year(o.orderDate), month(o.orderDate), p.productName
+order by rok DESC, miesiac DESC;
+
+/* 4c */
+
+select pl.productLine, count(p.productCode)
+from productlines as pl
+inner join products as p on pl.productLine=p.productLine
+group by pl.productLine
+having count(p.productCode) between 10 and 20;
+
+
+https://github.com/plangcdv/cdv
